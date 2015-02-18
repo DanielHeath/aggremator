@@ -9,6 +9,7 @@ import (
 	"flag"
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/feeds"
+	"github.com/danielheath/aggremator/feeds/dilbert"
 	"github.com/danielheath/aggremator/feeds/pennyarcade"
 	"github.com/danielheath/aggremator/feeds/xkcd"
 	"github.com/danielheath/aggremator/maildir"
@@ -40,6 +41,7 @@ var debug = flag.Bool(
 var allFeeds = []feeds.Feed{
 	xkcd.Feed{},
 	pennyarcade.Feed{},
+	dilbert.Feed{},
 }
 
 func main() {
