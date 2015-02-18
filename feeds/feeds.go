@@ -1,14 +1,13 @@
 package feeds
 
 import (
+	"github.com/SlyMarbo/rss"
 	"github.com/go-gomail/gomail"
 )
 
 type Feed interface {
 	Url() string
-	Fetch() ([]FeedItem, error)
-}
-
-type FeedItem interface {
-	Serialize(*gomail.Message) error
+	Category() string
+	Sample() string
+	Serialize(rss.Item, *gomail.Message) error
 }
