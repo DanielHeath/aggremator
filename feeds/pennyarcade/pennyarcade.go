@@ -1,10 +1,11 @@
 package pennyarcade
 
+// TODO: Start testing these properly using the sample.
+
 import (
-	"errors"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/SlyMarbo/rss"
-	"github.com/danielheath/aggremator/feeds/comic"
+	"github.com/danielheath/aggremator/mail"
 	"github.com/go-gomail/gomail"
 	"regexp"
 )
@@ -36,32 +37,12 @@ func (f Feed) Serialize(item rss.Item, msg *gomail.Message) error {
 
 	if newsPostTitlePattern.MatchString(item.Title) {
 		post := doc.Find(".postBody .copy")
-		html, err := post.Html()
-		if err != nil {
-			return err
-		}
-		text := post.Text()
-		msg.SetBody("text/html", html)
-		msg.AddAlternative("text/plain", item.Link+"\n\n"+text)
+		return mail.AttachHtmlBody(msg, post, item.Link)
 	} else if comicTitlePattern.MatchString(item.Title) {
-		msg.AddAlternative("text/plain", item.Link)
-		img := doc.Find("#comicFrame img")
-
-		alt, _ := img.Attr("alt") // Not every img has an alt
-		href, _ := img.Attr("src")
-
-		if href == "" {
-			return errors.New("No href found for " + item.Link) // every img has a src
-		}
-
-		return comic.Image{
-			Title:    alt,
-			Url:      href,
-			Filename: "comic.jpg",
-		}.AttachInline(msg)
-
+		img := doc.Find("#comicFrame")
+		return mail.AttachHtmlBody(msg, img, item.Link)
 	} else {
-		msg.AddAlternative("text/plain", item.Content)
+		msg.AddAlternative("text/plain", item.Link+"\n\n"+item.Content)
 		msg.SetBody("text/html", item.Content)
 	}
 	return nil
