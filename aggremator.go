@@ -5,7 +5,8 @@ TODO:
   * Save *all* inline images from html pages
   * PA -> title has escaped entities
 	* Start testing some things
-	* goquery for every link attr?
+	* goquery for every feed?
+	* write 'go generate' based curl-to-sample thingy
 */
 
 import (
