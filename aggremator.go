@@ -2,11 +2,10 @@ package main
 
 /*
 TODO:
-  * Save *all* inline images from html pages
   * PA -> title has escaped entities
-	* Start testing some things
-	* goquery for every feed?
 	* write 'go generate' based curl-to-sample thingy instead of manually updating
+	* better way to test single item parsing than re-running everything
+	* 'support the artist' links aren't coming through
 */
 
 import (
