@@ -6,16 +6,20 @@ TODO:
   * PA -> title has escaped entities
 	* Start testing some things
 	* goquery for every feed?
-	* write 'go generate' based curl-to-sample thingy
+	* write 'go generate' based curl-to-sample thingy instead of manually updating
 */
 
 import (
 	"flag"
+	"fmt"
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/feeds"
 	"github.com/danielheath/aggremator/feeds/amazingsuperpowers"
 	"github.com/danielheath/aggremator/feeds/dilbert"
+	"github.com/danielheath/aggremator/feeds/orderofthestick"
 	"github.com/danielheath/aggremator/feeds/pennyarcade"
+	"github.com/danielheath/aggremator/feeds/questionablecontent"
+	"github.com/danielheath/aggremator/feeds/smbc"
 	"github.com/danielheath/aggremator/feeds/xkcd"
 	"github.com/danielheath/aggremator/maildir"
 	"github.com/danielheath/aggremator/pastentries"
@@ -46,11 +50,17 @@ func init() {
 }
 
 var allFeeds = []feeds.Feed{
-	xkcd.Feed{},
-	pennyarcade.Feed{},
-	dilbert.Feed{},
-	amazingsuperpowers.Feed{},
+	xkcd.Feed,
+	pennyarcade.Feed,
+	dilbert.Feed,
+	amazingsuperpowers.Feed,
+	smbc.Feed,
+	questionablecontent.Feed,
+	orderofthestick.Feed,
 }
+var currentFeeds = allFeeds // []feeds.Feed{
+// 	orderofthestick.Feed,
+// }
 
 func main() {
 	flag.Parse()
@@ -62,7 +72,7 @@ func main() {
 	}
 	die(err)
 
-	for _, feed := range allFeeds {
+	for _, feed := range currentFeeds {
 		var doc *rss.Feed
 		if debug {
 			doc, err = rss.Parse([]byte(feed.Sample()))
@@ -79,7 +89,7 @@ func main() {
 				msg.SetHeader("From", "rss@example.org")
 				msg.SetHeader("To", "rss@example.org")
 				err := feed.Serialize(*item, msg)
-				die(err)
+				die(err, item, "\n", item.Content)
 				sender := maildir.Mailer(
 					homedir +
 						"/.mail/fastmail/INBOX.Feeds." +
@@ -99,8 +109,9 @@ func main() {
 	}
 }
 
-func die(err error) {
+func die(err error, context ...interface{}) {
 	if err != nil {
+		fmt.Println(context)
 		panic(err)
 	}
 }

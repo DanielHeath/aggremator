@@ -1,5 +1,6 @@
 package pastentries
 
+// TODO: Extract interface, add postgres storage
 import (
 	"bufio"
 	"bytes"

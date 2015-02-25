@@ -1,5 +1,6 @@
 package comic
 
+// TODO: Merge into 'feeds'
 import (
 	"github.com/danielheath/aggremator/mail"
 	"github.com/go-gomail/gomail"
