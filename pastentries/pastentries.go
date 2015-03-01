@@ -13,6 +13,14 @@ type File string
 
 type PastEntries map[string]bool
 
+func (pe PastEntries) AlreadySeen(url string) bool {
+	return pe[url]
+}
+
+func (pe PastEntries) MarkSeen(url string) {
+	pe[url] = true
+}
+
 func (path File) Read() (PastEntries, error) {
 	pastEntries := make(map[string]bool)
 	file, err := os.Open(string(path))

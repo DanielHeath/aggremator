@@ -10,6 +10,6 @@ var (
 		FeedSample:       Sample,
 		MailCategory:     "Comics.SMBC",
 		Selector:         feeds.CssSelector("#comicimage, #aftercomic"),
-		SupportTheArtist: "http://smbc.myshopify.com",
+		SupportTheArtist: "http://smbc.myshopify.com and https://www.patreon.com/ZachWeinersmith",
 	}
 )

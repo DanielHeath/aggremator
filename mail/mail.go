@@ -1,9 +1,10 @@
 package mail
 
 import (
+	"code.google.com/p/cascadia"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"github.com/go-gomail/gomail"
+	"golang.org/x/net/html"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -27,64 +28,117 @@ func GetImg(url string, name string) (*gomail.File, error) {
 	}, nil
 }
 
-// TODO: This only attaches the first selection item.
-func AttachHtmlBody(msg *gomail.Message, s *goquery.Selection, doc *goquery.Document) error {
-	var err error
-	if s.Length() == 0 {
+func replaceSrcWithAttachments(msg *gomail.Message, n *html.Node) {
+	for _, a := range n.Attr {
+		if a.Key == "src" {
+			a.Val = ""
+		}
+	}
+}
+
+func getAttr(n *html.Node, attr string) string {
+	for _, a := range n.Attr {
+		if a.Key == attr {
+			return a.Val
+		}
+	}
+	return ""
+}
+
+// Does not handle multiple copies of the same attr.
+func setAttr(n *html.Node, attr, val string) {
+
+	for i, a := range n.Attr {
+		if a.Key == attr {
+			n.Attr[i].Val = val
+			return
+		}
+	}
+	n.Attr = append(n.Attr, html.Attribute{Key: attr, Val: val})
+	return
+}
+
+// TODO: src re-writing in a url context *needs* tests. Pretty sure it's got bugs.
+func rewriteSrc(src string, context url.URL) string {
+	if src[0] == '/' {
+		if src[1] == '/' {
+			// "//domain.com/resource"
+			src = context.Scheme + src[2:]
+		} else {
+			// relative to root
+			context.Path = src
+			src = context.String()
+		}
+	} else if src[:4] != "http" {
+		context.Path = context.Path + src
+		src = context.String()
+	}
+	return src
+}
+
+func renderPlainText(n *html.Node) string {
+	if n.Type == html.TextNode {
+		return n.Data
+	}
+
+	alt := getAttr(n, "alt")
+	src := getAttr(n, "src")
+	title := getAttr(n, "title")
+	if title == alt {
+		title = ""
+	}
+	if src != "" {
+		src = "[" + src + "]"
+	}
+
+	results := []string{src}
+	for child := n.FirstChild; child != nil; child = child.NextSibling {
+		results = append(results, renderPlainText(child))
+	}
+	results = append(results, alt, title)
+	return strings.Join(results, " ")
+}
+
+func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) error {
+	if len(nodes) <= 0 {
 		return fmt.Errorf("AttachHtmlBody called with no body")
 	}
-
-	link := ""
-	if doc.Url != nil {
-		link = doc.Url.String()
+	hasSrcAttr := cascadia.MustCompile("[src]")
+	externalResourceNodes := []*html.Node{}
+	for _, n := range nodes {
+		externalResourceNodes = append(externalResourceNodes, hasSrcAttr.MatchAll(n)...)
 	}
 
-	externalResources := s.Find("[src]")
-	resourceUrls := make([]*goquery.Selection, externalResources.Length())
-	externalResources.Each(func(idx int, s *goquery.Selection) {
-		resourceUrls[idx] = s
-	})
-	for idx, s := range resourceUrls {
-		src, _ := s.Attr("src")
-
-		if src != "" {
-			if src[0] == '/' { // relative to root
-				u, err := url.Parse(link)
-				if err != nil {
-					return fmt.Errorf("Looking for a domain for relative url '%s'; failed to parse document url (%s). TODO: Fallback to feed host?", link, err)
-				}
-				u.Path = src
-				src = u.String()
-
-			} else if src[:4] != "http" { // relative to page
-				src = link[:strings.LastIndex(link, "/")] + "/" + src
-			}
+	for idx, n := range externalResourceNodes {
+		if src := getAttr(n, "src"); src != "" {
+			src = rewriteSrc(src, baseUrl)
 			img, err := GetImg(src, fmt.Sprintf("external_%d", idx))
 			if err != nil {
 				return err
 			}
+			setAttr(n, "orig-src", src)
+			setAttr(n, "src", "cid:"+img.Name)
 			msg.Embed(img)
-			s.SetAttr("orig-src", src)
-			s.SetAttr("src", "cid:"+img.Name)
 		}
 	}
 
-	html := ""
-	s.EachWithBreak(func(_ int, i *goquery.Selection) bool {
-		var h string
-		h, err = i.Html()
+	richtext := msg.GetBodyWriter("text/html")
+
+	for _, n := range nodes {
+		err := html.Render(richtext, n)
 		if err != nil {
-			return false
+			return err
 		}
-		html += h
-		return true
-	})
-	if err != nil {
-		return err
 	}
 
-	msg.SetBody("text/html", html)
+	plaintext := []string{"From " + baseUrl.String() + "\n"}
+	for _, n := range nodes {
+		plaintext = append(plaintext, renderPlainText(n))
+	}
 
-	msg.AddAlternative("text/plain", link+"\n\n"+s.Text())
+	msg.AddAlternative(
+		"text/plain",
+		strings.Join(plaintext, ""),
+	)
 	return nil
 }

@@ -5,7 +5,7 @@ TODO:
   * PA -> title has escaped entities
 	* write 'go generate' based curl-to-sample thingy instead of manually updating
 	* better way to test single item parsing than re-running everything
-	* 'support the artist' links aren't coming through
+	* I'd prefer to extract the feeds to a config file so this could be re-usable
 */
 
 import (
@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/feeds"
+	"github.com/danielheath/aggremator/feeds/alicegrove"
 	"github.com/danielheath/aggremator/feeds/amazingsuperpowers"
 	"github.com/danielheath/aggremator/feeds/dilbert"
 	"github.com/danielheath/aggremator/feeds/orderofthestick"
@@ -29,6 +30,7 @@ import (
 var pastEntriesPath string
 var homedir string
 var debug bool
+var maildirPath string
 
 func init() {
 	usr, err := user.Current()
@@ -43,7 +45,7 @@ func init() {
 	flag.BoolVar(
 		&debug,
 		"debug",
-		true,
+		false,
 		"debug mode",
 	)
 }
@@ -52,6 +54,7 @@ var allFeeds = []feeds.Feed{
 	xkcd.Feed,
 	pennyarcade.Feed,
 	dilbert.Feed,
+	alicegrove.Feed,
 	amazingsuperpowers.Feed,
 	smbc.Feed,
 	questionablecontent.Feed,
@@ -62,14 +65,20 @@ var currentFeeds = allFeeds // []feeds.Feed{
 // }
 
 func main() {
+	var err error
 	flag.Parse()
 
+	pastEntries := pastentries.PastEntries{}
 	pastEntriesFile := pastentries.File(pastEntriesPath)
-	pastEntries, err := pastEntriesFile.Read()
-	if debug {
-		pastEntries = pastentries.PastEntries{}
+	if !debug {
+		pastEntries, err = pastEntriesFile.Read()
+		die(err)
 	}
-	die(err)
+
+	maildirPath = homedir + "/.mail/fastmail"
+	if debug {
+		maildirPath = homedir + "/.mail/testmail"
+	}
 
 	for _, feed := range currentFeeds {
 		var doc *rss.Feed
@@ -80,6 +89,7 @@ func main() {
 		}
 		die(err)
 		for _, item := range doc.Items {
+			// TODO: One goroutine per feed
 			// Have we seen this feed entry before?
 			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map
 			if _, ok := pastEntries[maildir.CleanId(item.Link+item.ID)]; !ok {
@@ -90,8 +100,8 @@ func main() {
 				err := feed.Serialize(*item, msg)
 				die(err, item, "\n", item.Content)
 				sender := maildir.Mailer(
-					homedir +
-						"/.mail/fastmail/INBOX.Feeds." +
+					maildirPath +
+						"/INBOX.Feeds." +
 						feed.Category() +
 						"/new/" +
 						maildir.CleanId(item.ID),

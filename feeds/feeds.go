@@ -7,6 +7,7 @@ import (
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/mail"
 	"github.com/go-gomail/gomail"
+	"golang.org/x/net/html"
 	"strings"
 )
 
@@ -28,10 +29,6 @@ func CssSelector(css string) SelectorFunc {
 func ParentSelector(f SelectorFunc) SelectorFunc {
 	return SelectorFunc(func(doc *goquery.Document, item rss.Item) (*goquery.Selection, error) {
 		sel, err := f(doc, item)
-		// fmt.Println("ASDFG")
-		// fmt.Println(sel.Length())
-		// fmt.Println(sel.Parent().Html())
-		// fmt.Println("ASDFG")
 		return sel.Parent(), err
 	})
 }
@@ -73,10 +70,20 @@ func (f SelectorFeed) Serialize(item rss.Item, msg *gomail.Message) error {
 			err.Error(),
 		)
 	}
+
+	fmt.Println("Attaching support the artist content && error message:")
+	fmt.Println(doc.BeforeHtml(origError).AfterHtml(f.SupportTheArtist))
+
+	selection := append(
+		[]*html.Node{textToNode(origError)},
+		doc.Nodes...,
+	)
+	// Can't see a tidier way to do this :/
+	selection = append(selection, textToNode(f.SupportTheArtist))
 	return mail.AttachHtmlBody(
 		msg,
-		doc.BeforeHtml(origError).AfterHtml(f.SupportTheArtist),
-		doc,
+		*doc.Url,
+		selection...,
 	)
 }
 
@@ -98,6 +105,21 @@ func (f SelectorFeed) serializeLink(item rss.Item, msg *gomail.Message) error {
 	if selection.Length() == 0 {
 		return fmt.Errorf("No content found by selector function.")
 	}
-	selection = selection.AfterHtml(f.SupportTheArtist)
-	return mail.AttachHtmlBody(msg, selection, doc)
+
+	nodes := append(selection.Nodes, textToNode(f.SupportTheArtist))
+	return mail.AttachHtmlBody(msg, *doc.Url, nodes...)
+}
+
+func textToNode(s string) *html.Node {
+	b := bytes.NewBufferString("<div>" + s + "</div>")
+
+	node, err := html.Parse(b)
+	if err != nil {
+		panic(fmt.Errorf(
+			"Misconfiguration: Support URL did not parse (%s); html was %s",
+			err.Error(),
+			"<div>"+s+"</div>",
+		))
+	}
+	return node
 }
