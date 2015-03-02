@@ -58,22 +58,9 @@ func setAttr(n *html.Node, attr, val string) {
 	return
 }
 
-// TODO: src re-writing in a url context *needs* tests. Pretty sure it's got bugs.
 func rewriteSrc(src string, context url.URL) string {
-	if src[0] == '/' {
-		if src[1] == '/' {
-			// "//domain.com/resource"
-			src = context.Scheme + src[2:]
-		} else {
-			// relative to root
-			context.Path = src
-			src = context.String()
-		}
-	} else if src[:4] != "http" {
-		context.Path = context.Path + src
-		src = context.String()
-	}
-	return src
+	ctx, _ := context.Parse(src)
+	return ctx.String()
 }
 
 func renderPlainText(n *html.Node) string {
@@ -103,27 +90,30 @@ func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) e
 	if len(nodes) <= 0 {
 		return fmt.Errorf("AttachHtmlBody called with no body")
 	}
-	hasSrcAttr := cascadia.MustCompile("[src]")
-	externalResourceNodes := []*html.Node{}
-	for _, n := range nodes {
-		externalResourceNodes = append(externalResourceNodes, hasSrcAttr.MatchAll(n)...)
-	}
 
-	for idx, n := range externalResourceNodes {
-		if src := getAttr(n, "src"); src != "" {
-			src = rewriteSrc(src, baseUrl)
-			img, err := GetImg(src, fmt.Sprintf("external_%d", idx))
-			if err != nil {
-				return err
+	hasSrcAttr := cascadia.MustCompile("[src]")
+	hasInlineStyle := cascadia.MustCompile("[style]")
+	for _, topLevelNodes := range nodes {
+		// Strip inline styles
+		for _, styledNode := range hasInlineStyle.MatchAll(topLevelNodes) {
+			setAttr(styledNode, "style", "")
+		}
+
+		for idx, srcNode := range hasSrcAttr.MatchAll(topLevelNodes) {
+			if src := getAttr(srcNode, "src"); src != "" {
+				src = rewriteSrc(src, baseUrl)
+				img, err := GetImg(src, fmt.Sprintf("external_%d", idx))
+				if err != nil {
+					return err
+				}
+				setAttr(srcNode, "orig-src", src)
+				setAttr(srcNode, "src", "cid:"+img.Name)
+				msg.Embed(img)
 			}
-			setAttr(n, "orig-src", src)
-			setAttr(n, "src", "cid:"+img.Name)
-			msg.Embed(img)
 		}
 	}
 
 	richtext := msg.GetBodyWriter("text/html")
-
 	for _, n := range nodes {
 		err := html.Render(richtext, n)
 		if err != nil {
