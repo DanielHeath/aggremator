@@ -6,6 +6,7 @@ TODO:
 	* write 'go generate' based curl-to-sample thingy instead of manually updating
 	* better way to test single item parsing than re-running everything
 	* I'd prefer to extract the feeds to a config file so this could be re-usable
+	* amazingsuperpowers had a youtube link in their feed, came thru as a busted thingy.
 */
 
 import (
