@@ -87,6 +87,7 @@ func renderPlainText(n *html.Node) string {
 }
 
 func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) error {
+	attachmentCount := 0
 	if len(nodes) <= 0 {
 		return fmt.Errorf("AttachHtmlBody called with no body")
 	}
@@ -99,10 +100,11 @@ func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) e
 			setAttr(styledNode, "style", "")
 		}
 
-		for idx, srcNode := range hasSrcAttr.MatchAll(topLevelNodes) {
+		for _, srcNode := range hasSrcAttr.MatchAll(topLevelNodes) {
 			if src := getAttr(srcNode, "src"); src != "" {
 				src = rewriteSrc(src, baseUrl)
-				img, err := GetImg(src, fmt.Sprintf("external_%d", idx))
+				img, err := GetImg(src, fmt.Sprintf("external_%d", attachmentCount))
+				attachmentCount += 1
 				if err != nil {
 					return err
 				}

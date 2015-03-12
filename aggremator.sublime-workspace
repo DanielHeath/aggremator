@@ -1,0 +1,634 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"u",
+				"baseUrl	url.URL ν"
+			],
+			[
+				"M",
+				"MatchAll	[]*html.Node ƒ"
+			],
+			[
+				"Hand",
+				"HandleFunc	 ƒ"
+			],
+			[
+				"n",
+				"textToNode	*html.Node ƒ"
+			],
+			[
+				"app",
+				"AppendNodes	*goquery.Selection ƒ"
+			],
+			[
+				"NewD",
+				"NewDocumentFromNode	*goquery.Document ƒ"
+			],
+			[
+				"a",
+				"AppendChild	 ƒ"
+			],
+			[
+				"h",
+				"AppendChild	 ƒ"
+			],
+			[
+				"New",
+				"NewDocumentFromNode	*goquery.Document ƒ"
+			],
+			[
+				"newbu",
+				"NewBufferString	*bytes.Buffer ƒ"
+			],
+			[
+				"per",
+				"ModePerm	 Ɩ"
+			],
+			[
+				"mkd",
+				"MkdirAll	error ƒ"
+			],
+			[
+				"ea",
+				"EachWithBreak	*goquery.Selection ƒ"
+			],
+			[
+				"i",
+				"IndexRune	int ƒ"
+			],
+			[
+				"new",
+				"NewDocumentFromReader	*goquery.Document, error ƒ"
+			],
+			[
+				"att",
+				"SetAttr	*goquery.Selection ƒ"
+			],
+			[
+				"Ea",
+				"EachWithBreak	*goquery.Selection ƒ"
+			],
+			[
+				"past",
+				"pastEntries	pastentries.PastEntries ν"
+			],
+			[
+				"N",
+				"NewDocumentFromNode	*goquery.Document ƒ"
+			],
+			[
+				"se",
+				"SetHeader	 ƒ"
+			],
+			[
+				"mat",
+				"MatchString	bool ƒ"
+			],
+			[
+				"ma",
+				"MatchString	bool ƒ"
+			],
+			[
+				"PastEn",
+				"PastEntriesFile	string ʈ"
+			],
+			[
+				"str",
+				"StringVar	 ƒ"
+			],
+			[
+				"fp",
+				"Fprintln	n int, err error ƒ"
+			],
+			[
+				"Cl",
+				"CleanId	string ƒ"
+			],
+			[
+				"op",
+				"OpenFile	file *os.File, err error ƒ"
+			],
+			[
+				"sca",
+				"NewScanner	*bufio.Scanner ƒ"
+			],
+			[
+				"s",
+				"ScanLines	advance int, token []byte, err error ƒ"
+			],
+			[
+				"rep",
+				"Replace	string ƒ"
+			],
+			[
+				"Buf",
+				"NewBuffer	*bytes.Buffer ƒ"
+			],
+			[
+				"en",
+				"NewEncoder	*xml.Encoder ƒ"
+			],
+			[
+				"b",
+				"body	[]byte ν"
+			],
+			[
+				"NewBuf",
+				"NewBufferString	*bytes.Buffer ƒ"
+			],
+			[
+				"Pr",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"pr",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"Handl",
+				"HandlerFunc	func(http.ResponseWriter, *http.Request) ʈ"
+			],
+			[
+				"Han",
+				"HandleFunc	 ƒ"
+			]
+		]
+	},
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 33.0,
+		"selected_items":
+		[
+			[
+				"package control",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"goto",
+				"GoSublime: Goto Definition"
+			],
+			[
+				"gosublime",
+				"GoSublime: Fmt and save as ..."
+			],
+			[
+				"log",
+				"GoSublime: Open Error Log"
+			],
+			[
+				"fm",
+				"GoSublime: Fmt and save"
+			],
+			[
+				"man pa",
+				"Set Syntax: Man Page (groff/troff)"
+			],
+			[
+				"preview",
+				"Set Syntax: Man Page Preview"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": -49.0,
+		"history":
+		[
+			" import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) ",
+			"import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'https://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/aggremator.go",
+		"/home/daniel/.config/sublime-text-3/Packages/GoOracle/User.sublime-settings",
+		"/home/daniel/.config/sublime-text-3/Packages/GoOracle/Default.sublime-settings",
+		"/home/daniel/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/aggremator.sublime-project",
+		"/home/daniel/projects/go/aggremator.sublime-project",
+		"/home/daniel/projects/go/src/code.google.com/p/go.net/html/charset/testdata/UTF-16BE-BOM.html",
+		"/home/daniel/projects/go/src/code.google.com/p/go.net/ipv4/sockopt_unix.go",
+		"/home/daniel/projects/go/bin/sprite",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/aggremator.sublime_project",
+		"/home/daniel/projects/go/src/github.com/heath-family/dash-home/dash-home.go",
+		"/home/daniel/projects/go/go.sublime-project",
+		"/home/daniel/.config/sublime-text-3/Packages/User/GoSublime.sublime-settings",
+		"/home/daniel/projects/go/src/gopkg.in/alexcesaro/quotedprintable.v1/header_test.go",
+		"/home/daniel/projects/go/src/gopkg.in/alexcesaro/quotedprintable.v1/header.go",
+		"/home/daniel/projects/go/bin/dash-home",
+		"/home/daniel/.config/sublime-text-3/Packages/GoOracle/Default (Linux).sublime-keymap",
+		"/home/daniel/projects/go/bin/aggremator",
+		"/home/daniel/projects/go/src/code.google.com/p/cascadia/.hgignore",
+		"/home/daniel/projects/go/src/github.com/axgle/mahonia/ASCII.go",
+		"/home/daniel/projects/go/src/code.google.com/p/go.net/ipv4/sockopt_asmreq_stub.go",
+		"/home/daniel/projects/go/src/code.google.com/p/go.net/html/charset/testdata/meta-charset-attribute.html",
+		"/home/daniel/projects/go/src/code.google.com/p/freetype-go/CONTRIBUTORS",
+		"/home/daniel/Desktop/minecraft.rb",
+		"/home/daniel/projects/go/src/github.com/heath-family/dash-home/bom/ftp.go",
+		"/home/daniel/projects/go/src/github.com/heath-family/dash-home/bom/bom.go",
+		"/home/daniel/Downloads/settings.k9s",
+		"/home/daniel/Downloads/settings(1).k9s",
+		"/home/daniel/projects/go/src/github.com/heath-family/dash-home/web/web.go",
+		"/home/daniel/projects/go/src/github.com/heath-family/dash-home/Godeps/Godeps.json",
+		"/home/daniel/.cache/thumbnails/gnome-exe-thumbnailer.files",
+		"/home/daniel/.cache/thumbnails/gnome-exe-thumbnailer.cfg",
+		"/etc/fstab",
+		"/home/daniel/Private/unmount.sh",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/pastentries/pastentries.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/leunig/leunig.go",
+		"/home/daniel/projects/go/src/github.com/PuerkitoBio/goquery/query.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/Makefile",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/feeds.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/whatif/whatif.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/mail/mail.go",
+		"/home/daniel/projects/go/src/golang.org/x/net/html/node.go",
+		"/home/daniel/projects/go/src/github.com/PuerkitoBio/goquery/property.go",
+		"/home/daniel/projects/go/src/golang.org/x/tools/cmd/html2article/conv.go",
+		"/home/daniel/projects/go/src/golang.org/x/tools/cmd/cover/html.go",
+		"/home/daniel/projects/go/src/golang.org/x/tools/present/html.go",
+		"/home/daniel/projects/go/src/code.google.com/p/cascadia/parser.go",
+		"/home/daniel/projects/go/src/github.com/PuerkitoBio/goquery/type.go",
+		"/home/daniel/projects/go/src/github.com/go-gomail/gomail/gomail.go",
+		"/home/daniel/projects/go/bin/godep",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/web/web.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/bom/bom.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/templates/index.html",
+		"/home/daniel/.bashrc",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/templates/dash.css",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/templates/foo.html",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/script/buildpack-compile",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/Procfile",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/pennyarcade/pennyarcade.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/alicegrove/alicegrove.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/alicegrove/sample.rss.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/maildir/maildir.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/comic/comic.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/amazingsuperpowers/amazingsuperpowers.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/orderofthestick/sample.rss.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/questionablecontent/sample.rss.go",
+		"/mnt/spinningrust/AutomaticBackups/backup.sh",
+		"/mnt/spinningrust/AutomaticBackups.log",
+		"/home/daniel/.mail/fastmail/fetch.log",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/smbc/smbc.go",
+		"/home/daniel/.aggremator/pastentries",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/orderofthestick/orderofthestick.go",
+		"/home/daniel/.mail/fastmail/INBOX.Feeds.Comics.OrderOfTheStick/new/httpwwwGiantITPcomcomicsoots0786html",
+		"/home/daniel/.mail/fastmail/INBOX.Feeds.Comics.OrderOfTheStick/new/httpwwwGiantITPcomcomicsoots0260html",
+		"/home/daniel/projects/go/bin/mailr",
+		"/home/daniel/.mail/fastmail/INBOX.Feeds.Comics.OrderOfTheStick/new/httpwwwGiantITPcomcomicsoots0375html",
+		"/home/daniel/projects/go/src/github.com/PuerkitoBio/goquery/traversal.go",
+		"/home/daniel/projects/go/src/mailr/web/generate.rb",
+		"/home/daniel/.mail/fastmail/INBOX.Feeds.Comics.OrderOfTheStick/new/httpwwwGiantITPcomcomicsoots0633html",
+		"/home/daniel/.mail/fastmail/INBOX.Feeds.Comics.OrderOfTheStick/new/httpwwwGiantITPcomcomicsoots0960html",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/xkcd/xkcd.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/dilbert/dilbert.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/questionablecontent/questionablecontent.go",
+		"/home/daniel/projects/go/src/code.google.com/p/cascadia/benchmark_test.go",
+		"/home/daniel/projects/go/src/code.google.com/p/cascadia/Makefile",
+		"/home/daniel/projects/go/src/code.google.com/p/cascadia/LICENSE",
+		"/home/daniel/projects/go/src/golang.org/x/tools/go/pointer/opt.go",
+		"/home/daniel/.mail/fastmail/INBOX.Feeds.Comics.OrderOfTheStick/new/httpwwwGiantITPcomcomicsoots0958html",
+		"/home/daniel/projects/go/src/github.com/PuerkitoBio/goquery/manipulation.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/erfworld/erfworld.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/.git/config",
+		"/home/daniel/projects/go/src/github.com/danielheath/dash-home/.git/config",
+		"/run/user/1000/gvfs/afp-volume:host=Stora.local,user=danielheath,volume=danielheath/FamilyLibrary",
+		"/home/daniel/.ssh/config",
+		"/home/daniel/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/amazingsuperpowers/amazingsuperpowers_test.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/smbc/sample.rss.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/amazingsuperpowers/sample.rss.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/dilbert/sample.rss.go",
+		"/home/daniel/projects/go/src/golang.org/x/tools/present/image.go",
+		"/home/daniel/projects/go/src/golang.org/x/tools/imports/imports.go",
+		"/home/daniel/projects/go/src/github.com/PuerkitoBio/goquery/iteration.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/erfworld/sample.rss.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/xkcd/sample.rss.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/pennyarcade/sample.rss.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/pennyarcade/sample.rss",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/feeds/xkcd/sample.rss",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/pastentries.go",
+		"/home/daniel/projects/go/src/github.com/danielheath/aggremator/xkcd/xkcd.go",
+		"/home/daniel/projects/go/src/aggremator/aggremator.go",
+		"/home/daniel/projects/go/src/aggremator/sample.mail",
+		"/home/daniel/.mail/fastmail/INBOX.INBOX.Trash/cur/../../INBOX.TestOfflineImap/cur/1422949960_0.12022.daniel-linux,U=1,FMD5=b391f08215fc284bfd9be2469cb57717:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422949877_0.12022.daniel-linux,U=32883,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422949978_0.12022.daniel-linux,U=32947,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422950127_0.12022.daniel-linux,U=33109,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422950246_0.12022.daniel-linux,U=33166,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422950342_2.12022.daniel-linux,U=33214,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422950344_3.12022.daniel-linux,U=33217,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422950379_2.12022.daniel-linux,U=33251,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422951444_0.12022.daniel-linux,U=28809,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422952624_2.12022.daniel-linux,U=28941,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422952728_1.12022.daniel-linux,U=29022,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422953012_2.12022.daniel-linux,U=29157,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422953645_1.12022.daniel-linux,U=29421,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422953794_6.12022.daniel-linux,U=29529,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422953876_3.12022.daniel-linux,U=29599,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422953929_0.12022.daniel-linux,U=29645,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S",
+		"/home/daniel/.mail/fastmail/INBOX.Archive/cur/1422954011_0.12022.daniel-linux,U=29773,FMD5=a89dc5b15e2a2abd53db13408e1f695e:2,S"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 108.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"hasChildSelector",
+			"hasChildMatch",
+			"Selector",
+			"fire",
+			"blindness",
+			"danielheath",
+			"smbc",
+			"setAttr",
+			"smbc",
+			"3D3655",
+			"smbc",
+			"rewriteSrc",
+			"getNodeText",
+			"Text(",
+			"TextNode",
+			"ElementNode",
+			"Type",
+			"getAttributePtr",
+			"getAttributeValue",
+			") Attr",
+			"func Attr",
+			"Attr",
+			"matchAllInto",
+			"MatchAll",
+			"type Matcher",
+			"Matcher",
+			"cascadia",
+			"parsePseudoclassSelector",
+			"hasDescendantSelector",
+			"hasDescendantMatch",
+			"Embed",
+			"Html()",
+			"Html() string",
+			"Html(",
+			"Selection",
+			"AttachHtmlBody",
+			"AppendChild",
+			"AttachHtmlBody",
+			"s.",
+			"SupportTheArtist",
+			"Parent(",
+			"asaa",
+			"\n	xkcd.Feed,\n	pennyarcade.Feed,\n	dilbert.Feed,\n	amazingsuperpowers.Feed,\n	smbc.Feed,\n	questionablecontent.Feed,",
+			"httpwwwGiantITPcomcomicsoots.*",
+			"httpwwwGiantITPcomcomicsoots",
+			"parent",
+			"descendantSelector",
+			"parent",
+			"^=",
+			"item.Link",
+			"strings",
+			"src",
+			"ffff",
+			"AfterHtml",
+			"\n	",
+			"AfterHtml",
+			".*smbccomics.*",
+			"httpfeedproxygooglecomrsmbccomicsPvLb3daVYan4RfKAindexphphttpfeedproxygooglecomrsmbccomicsPvLb3daVYan4RfKAindexphp",
+			"smbccomics",
+			"Html(",
+			"Html",
+			"smbccomics",
+			"AttachHtmlBody",
+			"fmt.",
+			"usr",
+			"v.",
+			"xkcd",
+			"PastEntriesFile",
+			"xkcdFolder",
+			"println",
+			"Date: ",
+			"Date",
+			"ctrl+s",
+			":",
+			"converter",
+			"type=I",
+			"TODO",
+			"l6",
+			"l4",
+			"score_adv_nec_any",
+			"score_adv_nec_lvl",
+			"r=10",
+			"x=",
+			"159",
+			"alias",
+			"40",
+			"\\n",
+			"\"\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"score_adv_nec_ne",
+			"score_adv_nec_a",
+			"score_adv_nec_l",
+			"158"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"replace":
+	{
+		"height": 60.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"sublime-pro",
+				"aggremator.sublime-project"
+			],
+			[
+				"heath",
+				"src/github.com/heath-family/dash-home/dash-home.go"
+			],
+			[
+				"aggrem",
+				"src/github.com/danielheath/aggremator/aggremator.go"
+			],
+			[
+				"aggremago",
+				"src/github.com/danielheath/aggremator/aggremator.go"
+			],
+			[
+				"cascad",
+				"code.google.com/p/cascadia/.hgignore"
+			],
+			[
+				"mail",
+				"mail/mail.go"
+			],
+			[
+				"aggre",
+				"src/github.com/danielheath/aggremator/aggremator.go"
+			],
+			[
+				"gomail",
+				"src/github.com/go-gomail/gomail/gomail.go"
+			],
+			[
+				"cascadia",
+				"src/code.google.com/p/cascadia/parser.go"
+			],
+			[
+				"goqu",
+				"src/github.com/PuerkitoBio/goquery/query.go"
+			],
+			[
+				"fet.sh",
+				"fetch.sh"
+			],
+			[
+				"smb",
+				"src/github.com/danielheath/aggremator/feeds/smbc/smbc.go"
+			],
+			[
+				"maildir",
+				"src/github.com/danielheath/aggremator/maildir/maildir.go"
+			],
+			[
+				"goquery",
+				"src/github.com/PuerkitoBio/goquery/query.go"
+			],
+			[
+				"goque",
+				"src/github.com/PuerkitoBio/goquery/query.go"
+			],
+			[
+				"prop",
+				"src/github.com/PuerkitoBio/goquery/property.go"
+			],
+			[
+				"pastego",
+				"src/github.com/danielheath/aggremator/pastentries/pastentries.go"
+			],
+			[
+				"aggre.go",
+				"src/github.com/danielheath/aggremator/aggremator.go"
+			],
+			[
+				"ima",
+				"src/golang.org/x/tools/present/image.go"
+			],
+			[
+				"layou",
+				"_layouts/default.html"
+			],
+			[
+				"make.b",
+				"make.bash"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 530.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 260.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

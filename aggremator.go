@@ -4,14 +4,16 @@ package main
 TODO:
   * PA -> title has escaped entities
 	* write 'go generate' based curl-to-sample thingy instead of manually updating
-	* better way to test single item parsing than re-running everything
 	* I'd prefer to extract the feeds to a config file so this could be re-usable
-	* amazingsuperpowers had a youtube link in their feed, came thru as a busted thingy.
+	* amazingsuperpowers had a youtube link in their feed, came thru as a busted thingy (using an iframe)
+	* QC responded to a comic link with a 404 (not up yet?) but no error was logged.
 */
 
 import (
 	"flag"
 	"fmt"
+	"os/user"
+
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/feeds"
 	"github.com/danielheath/aggremator/feeds/alicegrove"
@@ -25,7 +27,6 @@ import (
 	"github.com/danielheath/aggremator/maildir"
 	"github.com/danielheath/aggremator/pastentries"
 	"github.com/go-gomail/gomail"
-	"os/user"
 )
 
 var pastEntriesPath string
@@ -92,7 +93,7 @@ func main() {
 		for _, item := range doc.Items {
 			// TODO: One goroutine per feed
 			// Have we seen this feed entry before?
-			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map
+			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map; also, one-per-feed?
 			if _, ok := pastEntries[maildir.CleanId(item.Link+item.ID)]; !ok {
 				pastEntries[maildir.CleanId(item.Link+item.ID)] = true
 				msg := gomail.NewMessage()
@@ -100,6 +101,7 @@ func main() {
 				msg.SetHeader("To", "rss@example.org")
 				err := feed.Serialize(*item, msg)
 				die(err, item, "\n", item.Content)
+
 				sender := maildir.Mailer(
 					maildirPath +
 						"/INBOX.Feeds." +
@@ -108,10 +110,11 @@ func main() {
 						maildir.CleanId(item.ID),
 				)
 
-				m := gomail.NewMailer("localhost", "dummy", "dummy", 9002, gomail.SetSendMail(sender))
-				die(m.Send(msg))
-
-				if !debug {
+				if debug {
+					die(gomail.NewCustomMailer("127.0.0.1:1025", nil).Send(msg))
+				} else {
+					m := gomail.NewMailer("localhost", "dummy", "dummy", 9002, gomail.SetSendMail(sender))
+					die(m.Send(msg))
 					die(pastEntries.Write(pastEntriesFile)) // Update past entries after each message.
 				}
 			}

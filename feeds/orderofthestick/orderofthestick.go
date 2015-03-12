@@ -9,7 +9,7 @@ var (
 		FeedUrl:          "http://www.giantitp.com/comics/oots.rss",
 		FeedSample:       Sample,
 		MailCategory:     "Comics.OrderOfTheStick",
-		Selector:         feeds.ParentSelector(feeds.CssSelector("body [src^=\"/comic\"]")), // attribute prefix selector
+		Selector:         feeds.CssSelector(":haschild([src^=\"/comic\"])"), // attribute prefix selector
 		SupportTheArtist: "http://www.giantitp.com/Shop.html",
 	}
 )

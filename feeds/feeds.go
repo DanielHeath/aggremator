@@ -18,18 +18,25 @@ type Feed interface {
 	Serialize(rss.Item, *gomail.Message) error
 }
 
-type SelectorFunc func(*goquery.Document, rss.Item) (*goquery.Selection, error)
+type SelectorFunc func(*goquery.Document, rss.Item) ([]*html.Node, error)
 
 func CssSelector(css string) SelectorFunc {
-	return SelectorFunc(func(doc *goquery.Document, _ rss.Item) (*goquery.Selection, error) {
-		return doc.Find(css), nil
+	return SelectorFunc(func(doc *goquery.Document, _ rss.Item) ([]*html.Node, error) {
+		return doc.Find(css).Nodes, nil
 	})
 }
 
-func ParentSelector(f SelectorFunc) SelectorFunc {
-	return SelectorFunc(func(doc *goquery.Document, item rss.Item) (*goquery.Selection, error) {
-		sel, err := f(doc, item)
-		return sel.Parent(), err
+func MultiSelectorFunc(sf ...SelectorFunc) SelectorFunc {
+	return SelectorFunc(func(doc *goquery.Document, item rss.Item) ([]*html.Node, error) {
+		r := []*html.Node{}
+		for _, s := range sf {
+			nodes, err := s(doc, item)
+			if err != nil {
+				return r, err
+			}
+			r = append(r, nodes...)
+		}
+		return r, nil
 	})
 }
 
@@ -59,6 +66,10 @@ func (f SelectorFeed) Serialize(item rss.Item, msg *gomail.Message) error {
 	if err == nil { // All went well
 		return nil
 	}
+	// Very rarely, a feed contains a bad link on purpose.
+	// it's more useful to inline the feed content than fail in that case.
+	// TODO: Only inline feed content when the <link> is an invalid URL.
+
 	// Failed fetching the linked content; inline the feed content instead.
 	origError := err.Error()
 	reader := bytes.NewBufferString(item.Content)
@@ -102,11 +113,11 @@ func (f SelectorFeed) serializeLink(item rss.Item, msg *gomail.Message) error {
 		return err
 	}
 
-	if selection.Length() == 0 {
+	if len(selection) == 0 {
 		return fmt.Errorf("No content found by selector function.")
 	}
 
-	nodes := append(selection.Nodes, textToNode(f.SupportTheArtist))
+	nodes := append(selection, textToNode(f.SupportTheArtist))
 	return mail.AttachHtmlBody(msg, *doc.Url, nodes...)
 }
 

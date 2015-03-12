@@ -6,10 +6,13 @@ import (
 
 var (
 	Feed = feeds.SelectorFeed{
-		FeedUrl:          "http://feeds.feedburner.com/smbc-comics/PvLb",
-		FeedSample:       Sample,
-		MailCategory:     "Comics.SMBC",
-		Selector:         feeds.CssSelector("#comicimage, #aftercomic"),
+		FeedUrl:      "http://feeds.feedburner.com/smbc-comics/PvLb",
+		FeedSample:   Sample,
+		MailCategory: "Comics.SMBC",
+		Selector: feeds.MultiSelectorFunc(
+			feeds.CssSelector("#comicimage,#comicbody"),
+			feeds.CssSelector("#aftercomic"),
+		),
 		SupportTheArtist: "http://smbc.myshopify.com and https://www.patreon.com/ZachWeinersmith",
 	}
 )

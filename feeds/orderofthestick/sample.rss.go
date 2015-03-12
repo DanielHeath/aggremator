@@ -31,46 +31,5 @@ const Sample = `<?xml version="1.0"?>
   <description>http://www.GiantITP.com/comics/oots0974.html</description>
 </item>
 
-<item>
-  <title>973: Try, Try Again</title>
-  <link>http://www.GiantITP.com/comics/oots0973.html</link>
-  <description>http://www.GiantITP.com/comics/oots0973.html</description>
-</item>
-
-<item>
-  <title>972: She Might Even Be a Bit Ahead</title>
-  <link>http://www.GiantITP.com/comics/oots0972.html</link>
-  <description>http://www.GiantITP.com/comics/oots0972.html</description>
-</item>
-
-<item>
-  <title>971: Blast from the Past</title>
-  <link>http://www.GiantITP.com/comics/oots0971.html</link>
-  <description>http://www.GiantITP.com/comics/oots0971.html</description>
-</item>
-
-<item>
-  <title>970: Wandering Eyes</title>
-  <link>http://www.GiantITP.com/comics/oots0970.html</link>
-  <description>http://www.GiantITP.com/comics/oots0970.html</description>
-</item>
-
-<item>
-  <title>969: It's Only His SECOND Favorite Cuisine</title>
-  <link>http://www.GiantITP.com/comics/oots0969.html</link>
-  <description>http://www.GiantITP.com/comics/oots0969.html</description>
-</item>
-
-<item>
-  <title>968: Next Week They're Getting Drab</title>
-  <link>http://www.GiantITP.com/comics/oots0968.html</link>
-  <description>http://www.GiantITP.com/comics/oots0968.html</description>
-</item>
-
-<item>
-  <title>967: Craft Wondrous Bauble</title>
-  <link>http://www.GiantITP.com/comics/oots0967.html</link>
-  <description>http://www.GiantITP.com/comics/oots0967.html</description>
-</item>
 </channel></rss>
 `
