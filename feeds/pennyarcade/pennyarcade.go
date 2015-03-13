@@ -1,8 +1,9 @@
 package pennyarcade
 
 import (
-	"github.com/danielheath/aggremator/feeds"
 	"regexp"
+
+	"github.com/danielheath/aggremator/feeds"
 )
 
 var (
@@ -12,7 +13,7 @@ var (
 	Feed = feeds.SelectorFeed{
 		FeedUrl:          "https://penny-arcade.com/feed",
 		FeedSample:       Sample,
-		MailCategory:     "Comics.PennyArcade",
+		MailCategory:     "Comics",
 		SupportTheArtist: "http://store.penny-arcade.com/",
 		Selector:         feeds.CssSelector(".postBody .copy, #comicFrame"),
 	}

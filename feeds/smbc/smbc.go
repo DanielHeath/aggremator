@@ -8,7 +8,7 @@ var (
 	Feed = feeds.SelectorFeed{
 		FeedUrl:      "http://feeds.feedburner.com/smbc-comics/PvLb",
 		FeedSample:   Sample,
-		MailCategory: "Comics.SMBC",
+		MailCategory: "Comics",
 		Selector: feeds.MultiSelectorFunc(
 			feeds.CssSelector("#comicimage,#comicbody"),
 			feeds.CssSelector("#aftercomic"),

@@ -3,12 +3,13 @@ package feeds
 import (
 	"bytes"
 	"fmt"
+	"strings"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/mail"
 	"github.com/go-gomail/gomail"
 	"golang.org/x/net/html"
-	"strings"
 )
 
 type Feed interface {
@@ -108,7 +109,8 @@ func (f SelectorFeed) serializeLink(item rss.Item, msg *gomail.Message) error {
 	if err != nil {
 		return err
 	}
-	selection, err := f.Selector(doc, item)
+	selection, err := CssSelector("body")(doc, item) // TESTING - body only
+	// selection, err := f.Selector(doc, item)
 	if err != nil {
 		return err
 	}
