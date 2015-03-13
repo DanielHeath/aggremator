@@ -7,6 +7,8 @@ TODO:
 	* I'd prefer to extract the feeds to a config file so this could be re-usable
 	* amazingsuperpowers had a youtube link in their feed, came thru as a busted thingy (using an iframe)
 	* QC responded to a comic link with a 404 (not up yet?) but no error was logged.
+  * background test: hit a standard item from the feed, apply selector, check you get the right output
+   * that way you can find out when the layout breaks your selector...
 */
 
 import (
@@ -18,11 +20,14 @@ import (
 	"github.com/danielheath/aggremator/feeds"
 	"github.com/danielheath/aggremator/feeds/alicegrove"
 	"github.com/danielheath/aggremator/feeds/amazingsuperpowers"
+	"github.com/danielheath/aggremator/feeds/codelesscode"
 	"github.com/danielheath/aggremator/feeds/dilbert"
 	"github.com/danielheath/aggremator/feeds/orderofthestick"
+	"github.com/danielheath/aggremator/feeds/pbfcomics"
 	"github.com/danielheath/aggremator/feeds/pennyarcade"
 	"github.com/danielheath/aggremator/feeds/questionablecontent"
 	"github.com/danielheath/aggremator/feeds/smbc"
+	"github.com/danielheath/aggremator/feeds/whatif"
 	"github.com/danielheath/aggremator/feeds/xkcd"
 	"github.com/danielheath/aggremator/maildir"
 	"github.com/danielheath/aggremator/pastentries"
@@ -60,11 +65,12 @@ var allFeeds = []feeds.Feed{
 	amazingsuperpowers.Feed,
 	smbc.Feed,
 	questionablecontent.Feed,
+	whatif.Feed,
 	orderofthestick.Feed,
+	codelesscode.Feed,
+	pbfcomics.Feed,
 }
-var currentFeeds = allFeeds // []feeds.Feed{
-// 	orderofthestick.Feed,
-// }
+var currentFeeds = allFeeds
 
 func main() {
 	var err error
@@ -110,6 +116,7 @@ func main() {
 						maildir.CleanId(item.ID),
 				)
 
+				// TODO: SMTP directly (CLI options for sender/recipient/credentials?)
 				if debug {
 					die(gomail.NewCustomMailer("127.0.0.1:1025", nil).Send(msg))
 				} else {

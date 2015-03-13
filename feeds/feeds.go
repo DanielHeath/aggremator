@@ -3,6 +3,7 @@ package feeds
 import (
 	"bytes"
 	"fmt"
+	"net/url"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -73,6 +74,13 @@ func (f SelectorFeed) Serialize(item rss.Item, msg *gomail.Message) error {
 
 	// Failed fetching the linked content; inline the feed content instead.
 	origError := err.Error()
+
+	// We're showing inline content from the feed; use the FeedUrl as the base url.
+	u, err := url.Parse(f.FeedUrl)
+	if err != nil {
+		return fmt.Errorf("Selectorfeed FeedUrl is not a valid URL: %s", err)
+	}
+
 	reader := bytes.NewBufferString(item.Content)
 	doc, err = goquery.NewDocumentFromReader(reader)
 	if err != nil {
@@ -82,8 +90,11 @@ func (f SelectorFeed) Serialize(item rss.Item, msg *gomail.Message) error {
 			err.Error(),
 		)
 	}
-
+	fmt.Println(origError)
 	fmt.Println("Attaching support the artist content && error message:")
+	fmt.Println(f.FeedUrl)
+	fmt.Println(item.Link)
+	fmt.Println(item.Title)
 	fmt.Println(doc.BeforeHtml(origError).AfterHtml(f.SupportTheArtist))
 
 	selection := append(
@@ -92,9 +103,10 @@ func (f SelectorFeed) Serialize(item rss.Item, msg *gomail.Message) error {
 	)
 	// Can't see a tidier way to do this :/
 	selection = append(selection, textToNode(f.SupportTheArtist))
+
 	return mail.AttachHtmlBody(
 		msg,
-		*doc.Url,
+		*u,
 		selection...,
 	)
 }
@@ -109,8 +121,7 @@ func (f SelectorFeed) serializeLink(item rss.Item, msg *gomail.Message) error {
 	if err != nil {
 		return err
 	}
-	selection, err := CssSelector("body")(doc, item) // TESTING - body only
-	// selection, err := f.Selector(doc, item)
+	selection, err := f.Selector(doc, item)
 	if err != nil {
 		return err
 	}
