@@ -1,17 +1,20 @@
 package mail
 
 import (
-	"code.google.com/p/cascadia"
 	"fmt"
-	"github.com/go-gomail/gomail"
-	"golang.org/x/net/html"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
+
+	"code.google.com/p/cascadia"
+	"github.com/go-gomail/gomail"
+	"golang.org/x/net/html"
 )
 
 func GetImg(url string, name string) (*gomail.File, error) {
+	time.Sleep(time.Second) // Super hacky way to avoid slamming the server
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -28,14 +31,6 @@ func GetImg(url string, name string) (*gomail.File, error) {
 	}, nil
 }
 
-func replaceSrcWithAttachments(msg *gomail.Message, n *html.Node) {
-	for _, a := range n.Attr {
-		if a.Key == "src" {
-			a.Val = ""
-		}
-	}
-}
-
 func getAttr(n *html.Node, attr string) string {
 	for _, a := range n.Attr {
 		if a.Key == attr {
@@ -47,7 +42,6 @@ func getAttr(n *html.Node, attr string) string {
 
 // Does not handle multiple copies of the same attr.
 func setAttr(n *html.Node, attr, val string) {
-
 	for i, a := range n.Attr {
 		if a.Key == attr {
 			n.Attr[i].Val = val
