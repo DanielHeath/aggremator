@@ -1,5 +1,7 @@
 package questionablecontent
 
+// TODO: Comics often appear in the RSS feed some time before the file is available on the server.
+
 import (
 	"github.com/danielheath/aggremator/feeds"
 )

@@ -20,6 +20,11 @@ func GetImg(url string, name string) (*gomail.File, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode >= 400 {
+		return nil, fmt.Errorf("Error %s (%d) fetching %s", resp.Status, resp.StatusCode, url)
+	}
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err

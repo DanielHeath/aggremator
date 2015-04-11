@@ -12,6 +12,26 @@ const Sample = `<?xml version="1.0" encoding="utf-8" standalone="no"?>
         <pubDate>Thu, 19 Feb 2015 23:46:37 -0500</pubDate>
         <lastBuildDate>Thu, 19 Feb 2015 23:46:37 -0500</lastBuildDate>
         <atom:link href="http://www.questionablecontent.net/QCRSS.xml" rel="self" type="application/rss+xml"/>
+
+
+        <item>
+            <title>Game Over Man, Game Over</title>
+            <link>http://questionablecontent.net/view.php?comic=2933</link>
+            <description><![CDATA[<p><!-- Beginning of Project Wonderful ad code: -->
+<br />
+<!-- Ad box ID: 39770 -->
+<br />
+<map name="admap39770" id="admap39770"><area href="http://www.projectwonderful.com/out_nojs.php?r=0&c=0&id=39770&type=5" shape="rect" coords="0,0,728,90" title="" alt="" target="_blank" /></map>
+<br />
+<table cellpadding="0" border="0" cellspacing="0" width="728" bgcolor="#ffffff"><tr><td><img src="http://www.projectwonderful.com/nojs.php?id=39770&type=5" width="728" height="90" usemap="#admap39770" border="0" alt="" /></td></tr><tr><td bgcolor="#ffffff" colspan="1"><center><a style="font-size:10px;color:#0000ff;text-decoration:none;line-height:1.2;font-weight:bold;font-family:Tahoma, verdana,arial,helvetica,sans-serif;text-transform: none;letter-spacing:normal;text-shadow:none;white-space:normal;word-spacing:normal;" href="http://www.projectwonderful.com/advertisehere.php?id=39770&type=5" target="_blank">Ads by Project Wonderful!  Your ad could be here, right now.</a></center></td></tr><tr><td colspan="1" valign="top" width="728" bgcolor="#000000" style="height:3px;font-size:1px;padding:0px;max-height:3px;"></td></tr></table>
+<br />
+<img src="http://www.questionablecontent.net/comics/2933.png"></p>
+
+<p>And he was doing so well.</p>]]></description>
+            <pubDate>Mon, 06 Apr 2015 22:30:31 -0400</pubDate>
+            <guid isPermaLink="false">6384F6AE-32BA-45A8-B1F5-CF9FF88DE81A</guid>
+        </item>
+
         <item>
             <title>Awooooo</title>
             <link>http://questionablecontent.net/view.php?comic=2901</link>
