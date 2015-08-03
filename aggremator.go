@@ -32,6 +32,7 @@ import (
 	"github.com/danielheath/aggremator/maildir"
 	"github.com/danielheath/aggremator/pastentries"
 	"github.com/go-gomail/gomail"
+	"github.com/hashicorp/go-multierror"
 )
 
 var pastEntriesPath string
@@ -88,25 +89,40 @@ func main() {
 		maildirPath = homedir + "/.mail/testmail"
 	}
 
+	var feedErrors *multierror.Error
+
 	for _, feed := range currentFeeds {
+		fail := func(err error) bool {
+			if err != nil {
+				feedErrors = multierror.Append(feedErrors, err)
+				return true
+			}
+			return false
+		}
+
 		var doc *rss.Feed
 		if debug {
 			doc, err = rss.Parse([]byte(feed.Sample()))
 		} else {
 			doc, err = rss.Fetch(feed.Url())
 		}
-		die(err)
+		if fail(err) {
+			continue
+		}
 		for _, item := range doc.Items {
 			// TODO: One goroutine per feed
 			// Have we seen this feed entry before?
 			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map; also, one-per-feed?
 			if _, ok := pastEntries[maildir.CleanId(item.Link+item.ID)]; !ok {
-				pastEntries[maildir.CleanId(item.Link+item.ID)] = true
 				msg := gomail.NewMessage()
 				msg.SetHeader("From", "rss@example.org")
 				msg.SetHeader("To", "rss@example.org")
 				err := feed.Serialize(*item, msg)
-				die(err, item, "\n", item.Content)
+				// die(err, item, "\n", item.Content)
+
+				if fail(err) {
+					continue
+				}
 
 				sender := maildir.Mailer(
 					maildirPath +
@@ -122,11 +138,13 @@ func main() {
 				} else {
 					m := gomail.NewMailer("localhost", "dummy", "dummy", 9002, gomail.SetSendMail(sender))
 					die(m.Send(msg))
+					pastEntries[maildir.CleanId(item.Link+item.ID)] = true
 					die(pastEntries.Write(pastEntriesFile)) // Update past entries after each message.
 				}
 			}
 		}
 	}
+	die(feedErrors.ErrorOrNil())
 }
 
 func die(err error, context ...interface{}) {
