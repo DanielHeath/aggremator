@@ -95,6 +95,20 @@ func main() {
 		fail := func(err error) bool {
 			if err != nil {
 				feedErrors = multierror.Append(feedErrors, err)
+				msg := gomail.NewMessage()
+				msg.SetHeader("From", "rss.errors@example.org")
+				msg.SetHeader("To", "rss.errors@example.org")
+				msg.SetBody("text/plain", err.Error())
+				send(
+					msg,
+
+					maildirPath+fmt.Sprintf(
+						"/INBOX.Feeds.%s/new/%d",
+						feed.Category(),
+						&err,
+					),
+				)
+
 				return true
 			}
 			return false
@@ -110,6 +124,7 @@ func main() {
 			continue
 		}
 		for _, item := range doc.Items {
+
 			// TODO: One goroutine per feed
 			// Have we seen this feed entry before?
 			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map; also, one-per-feed?
@@ -119,32 +134,40 @@ func main() {
 				msg.SetHeader("To", "rss@example.org")
 				err := feed.Serialize(*item, msg)
 				// die(err, item, "\n", item.Content)
-
 				if fail(err) {
 					continue
 				}
 
-				sender := maildir.Mailer(
-					maildirPath +
-						"/INBOX.Feeds." +
-						feed.Category() +
-						"/new/" +
+				send(
+					msg,
+					maildirPath+
+						"/INBOX.Feeds."+
+						feed.Category()+
+						"/new/"+
 						maildir.CleanId(item.ID),
 				)
 
-				// TODO: SMTP directly (CLI options for sender/recipient/credentials?)
-				if debug {
-					die(gomail.NewCustomMailer("127.0.0.1:1025", nil).Send(msg))
-				} else {
-					m := gomail.NewMailer("localhost", "dummy", "dummy", 9002, gomail.SetSendMail(sender))
-					die(m.Send(msg))
+				if !debug {
 					pastEntries[maildir.CleanId(item.Link+item.ID)] = true
 					die(pastEntries.Write(pastEntriesFile)) // Update past entries after each message.
 				}
+
 			}
 		}
 	}
 	die(feedErrors.ErrorOrNil())
+}
+
+func send(msg *gomail.Message, sendPath string) {
+	// TODO: SMTP directly (CLI options for sender/recipient/credentials?)
+	if debug {
+		die(gomail.NewCustomMailer("127.0.0.1:1025", nil).Send(msg))
+	} else {
+		sender := maildir.Mailer(sendPath)
+
+		m := gomail.NewMailer("localhost", "dummy", "dummy", 9002, gomail.SetSendMail(sender))
+		die(m.Send(msg))
+	}
 }
 
 func die(err error, context ...interface{}) {
