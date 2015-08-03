@@ -102,6 +102,14 @@ func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) e
 		for _, srcNode := range hasSrcAttr.MatchAll(topLevelNodes) {
 			if src := getAttr(srcNode, "src"); src != "" {
 				src = rewriteSrc(src, baseUrl)
+				srcNode.Parent.InsertBefore(
+					&html.Node{
+						Type: html.TextNode,
+						Data: getAttr(srcNode, "title"),
+					},
+					srcNode,
+				)
+
 				img, err := GetImg(src, fmt.Sprintf("external_%d", attachmentCount))
 				attachmentCount += 1
 				if err != nil {
