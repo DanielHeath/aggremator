@@ -3,7 +3,6 @@ package feeds
 import (
 	"bytes"
 	"fmt"
-	"net/url"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -62,53 +61,7 @@ func (f SelectorFeed) Sample() string {
 
 func (f SelectorFeed) Serialize(item rss.Item, msg *gomail.Message) error {
 	msg.SetHeader("Subject", item.Title)
-	var doc *goquery.Document
-	var err error
-	err = f.serializeLink(item, msg)
-	if err == nil { // All went well
-		return nil
-	}
-	// Very rarely, a feed contains a bad link on purpose.
-	// it's more useful to inline the feed content than fail in that case.
-	// TODO: Only inline feed content when the <link> is an invalid URL.
-
-	// Failed fetching the linked content; inline the feed content instead.
-	origError := err.Error()
-
-	// We're showing inline content from the feed; use the FeedUrl as the base url.
-	u, err := url.Parse(f.FeedUrl)
-	if err != nil {
-		return fmt.Errorf("Selectorfeed FeedUrl is not a valid URL: %s", err)
-	}
-
-	reader := bytes.NewBufferString(item.Content)
-	doc, err = goquery.NewDocumentFromReader(reader)
-	if err != nil {
-		return fmt.Errorf(
-			"Failed to fetch linked content (%s), and failed falling back to using inline content (%s)",
-			origError,
-			err.Error(),
-		)
-	}
-	fmt.Println(origError)
-	fmt.Println("Attaching support the artist content && error message:")
-	fmt.Println(f.FeedUrl)
-	fmt.Println(item.Link)
-	fmt.Println(item.Title)
-	fmt.Println(doc.BeforeHtml(origError).AfterHtml(f.SupportTheArtist))
-
-	selection := append(
-		[]*html.Node{textToNode(origError)},
-		doc.Nodes...,
-	)
-	// Can't see a tidier way to do this :/
-	selection = append(selection, textToNode(f.SupportTheArtist))
-
-	return mail.AttachHtmlBody(
-		msg,
-		*u,
-		selection...,
-	)
+	return f.serializeLink(item, msg)
 }
 
 func (f SelectorFeed) serializeLink(item rss.Item, msg *gomail.Message) error {

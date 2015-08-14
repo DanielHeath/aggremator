@@ -14,6 +14,7 @@ TODO:
 import (
 	"flag"
 	"fmt"
+	"net"
 	"os/user"
 
 	"github.com/SlyMarbo/rss"
@@ -94,6 +95,9 @@ func main() {
 	for _, feed := range currentFeeds {
 		fail := func(err error) bool {
 			if err != nil {
+				if _, ok := err.(net.Error); ok {
+					return true
+				}
 				feedErrors = multierror.Append(feedErrors, err)
 				msg := gomail.NewMessage()
 				msg.SetHeader("From", "rss.errors@example.org")
