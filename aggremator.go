@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"net"
 	"os/user"
+	"strings"
 
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/feeds"
@@ -98,11 +99,30 @@ func main() {
 				if _, ok := err.(net.Error); ok {
 					return true
 				}
+				if _, ok := err.(net.DNSError); ok {
+					return true
+				}
+				if _, ok := err.(net.AddrError); ok {
+					return true
+				}
+				if _, ok := err.(net.DNSConfigError); ok {
+					return true
+				}
+				if _, ok := err.(net.InvalidAddrError); ok {
+					return true
+				}
+				if _, ok := err.(net.OpError); ok {
+					return true
+				}
+				if _, ok := err.(net.ParseError); ok {
+					return true
+				}
+
 				feedErrors = multierror.Append(feedErrors, err)
 				msg := gomail.NewMessage()
 				msg.SetHeader("From", "rss.errors@example.org")
 				msg.SetHeader("To", "rss.errors@example.org")
-				msg.SetBody("text/plain", err.Error())
+				msg.SetBody("text/plain", err.Error()+"\n"+feed.Url())
 				send(
 					msg,
 
