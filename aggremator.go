@@ -16,7 +16,6 @@ import (
 	"fmt"
 	"net"
 	"os/user"
-	"strings"
 
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/feeds"
@@ -99,22 +98,22 @@ func main() {
 				if _, ok := err.(net.Error); ok {
 					return true
 				}
-				if _, ok := err.(net.DNSError); ok {
+				if _, ok := err.(*net.DNSError); ok {
 					return true
 				}
-				if _, ok := err.(net.AddrError); ok {
+				if _, ok := err.(*net.AddrError); ok {
 					return true
 				}
-				if _, ok := err.(net.DNSConfigError); ok {
+				if _, ok := err.(*net.DNSConfigError); ok {
 					return true
 				}
-				if _, ok := err.(net.InvalidAddrError); ok {
+				if _, ok := err.(*net.InvalidAddrError); ok {
 					return true
 				}
-				if _, ok := err.(net.OpError); ok {
+				if _, ok := err.(*net.OpError); ok {
 					return true
 				}
-				if _, ok := err.(net.ParseError); ok {
+				if _, ok := err.(*net.ParseError); ok {
 					return true
 				}
 
