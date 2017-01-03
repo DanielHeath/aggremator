@@ -1,6 +1,7 @@
 package mail
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -13,7 +14,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func GetImg(url string, name string) (*gomail.File, error) {
+func GetImg(url string) (string, error) {
 	time.Sleep(time.Second) // Super hacky way to avoid slamming the server
 	resp, err := http.Get(url)
 	if err != nil {
@@ -24,16 +25,19 @@ func GetImg(url string, name string) (*gomail.File, error) {
 	if resp.StatusCode >= 400 {
 		return nil, fmt.Errorf("Error %s (%d) fetching %s", resp.Status, resp.StatusCode, url)
 	}
+	// setAttr(srcNode, "src", "data:"+contentType+";base64,"+)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
-	return &gomail.File{
-		MimeType: resp.Header.Get("Content-Type"),
-		Name:     name,
-		Content:  body,
-	}, nil
+	contentType := strings.Split(resp.Headers.Get("Content-Type"), ";")[0]
+
+	return fmt.Sprintf(
+		"data:%s;base64,%s",
+		contentType,
+		base64.StdEncoding.EncodeToString(body),
+	), nil
 }
 
 func getAttr(n *html.Node, attr string) string {
@@ -110,14 +114,13 @@ func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) e
 					srcNode,
 				)
 
-				img, err := GetImg(src, fmt.Sprintf("external_%d", attachmentCount))
-				attachmentCount += 1
+				img, err := GetImg(src)
 				if err != nil {
 					return err
 				}
+
 				setAttr(srcNode, "orig-src", src)
-				setAttr(srcNode, "src", "cid:"+img.Name)
-				msg.Embed(img)
+				setAttr(srcNode, "src", img)
 			}
 		}
 	}
