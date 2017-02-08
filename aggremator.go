@@ -23,17 +23,19 @@ import (
 	"github.com/danielheath/aggremator/feeds/amazingsuperpowers"
 	"github.com/danielheath/aggremator/feeds/codelesscode"
 	"github.com/danielheath/aggremator/feeds/dilbert"
+	"github.com/danielheath/aggremator/feeds/fowllanguage"
 	"github.com/danielheath/aggremator/feeds/orderofthestick"
 	"github.com/danielheath/aggremator/feeds/pbfcomics"
 	"github.com/danielheath/aggremator/feeds/pennyarcade"
 	"github.com/danielheath/aggremator/feeds/questionablecontent"
+	"github.com/danielheath/aggremator/feeds/sarahs_doodles"
 	"github.com/danielheath/aggremator/feeds/smbc"
+	"github.com/danielheath/aggremator/feeds/webcomicname"
 	"github.com/danielheath/aggremator/feeds/whatif"
 	"github.com/danielheath/aggremator/feeds/xkcd"
 	"github.com/danielheath/aggremator/maildir"
 	"github.com/danielheath/aggremator/pastentries"
 	"github.com/go-gomail/gomail"
-	"github.com/hashicorp/go-multierror"
 )
 
 var pastEntriesPath string
@@ -65,6 +67,9 @@ var allFeeds = []feeds.Feed{
 	dilbert.Feed,
 	alicegrove.Feed,
 	amazingsuperpowers.Feed,
+	sarahs_doodles.Feed,
+	webcomicname.Feed,
+	fowllanguage.Feed,
 	smbc.Feed,
 	questionablecontent.Feed,
 	whatif.Feed,
