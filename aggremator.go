@@ -14,8 +14,8 @@ TODO:
 import (
 	"flag"
 	"fmt"
-	"net"
 	"os/user"
+	"reflect"
 
 	"github.com/SlyMarbo/rss"
 	"github.com/danielheath/aggremator/feeds"
@@ -104,25 +104,11 @@ func main() {
 	for _, feed := range currentFeeds {
 		fail := func(err error) bool {
 			if err != nil {
-				if _, ok := err.(net.Error); ok {
-					return true
-				}
-				if _, ok := err.(*net.DNSError); ok {
-					return true
-				}
-				if _, ok := err.(*net.AddrError); ok {
-					return true
-				}
-				if _, ok := err.(*net.DNSConfigError); ok {
-					return true
-				}
-				if _, ok := err.(*net.InvalidAddrError); ok {
-					return true
-				}
-				if _, ok := err.(*net.OpError); ok {
-					return true
-				}
-				if _, ok := err.(*net.ParseError); ok {
+				errType := reflect.TypeOf(err)
+
+				// Sometimes hosts are down, causing the 'net' package to return errors.
+				// We'll try again later; no need to log this.
+				if errType.PkgPath() == "net" {
 					return true
 				}
 
@@ -130,12 +116,12 @@ func main() {
 				msg := gomail.NewMessage()
 				msg.SetHeader("From", "rss.errors@example.org")
 				msg.SetHeader("To", "rss.errors@example.org")
-				msg.SetBody("text/plain", err.Error()+"\n"+feed.Url())
+				msg.SetBody("text/plain", err.Error()+"\n"+feed.Url()+"\n"+errType.PkgPath()+"\n"+errType.String())
 				send(
 					msg,
 
 					maildirPath+fmt.Sprintf(
-						"/INBOX.Feeds.%s/new/%d",
+						"/INBOX.Errors.%s/new/%d",
 						feed.Category(),
 						&err,
 					),
@@ -187,7 +173,12 @@ func main() {
 			}
 		}
 	}
-	die(feedErrors.ErrorOrNil())
+	if feedErrors != nil {
+		fmt.Println(feedErrors.Errors)
+		fmt.Println(feedErrors.GoString())
+		fmt.Println(feedErrors.WrappedErrors())
+		die(feedErrors.ErrorOrNil())
+	}
 }
 
 func send(msg *gomail.Message, sendPath string) {

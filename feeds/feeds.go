@@ -35,6 +35,9 @@ func MultiSelectorFunc(sf ...SelectorFunc) SelectorFunc {
 			if err != nil {
 				return r, err
 			}
+			if len(nodes) == 0 {
+				return nodes, fmt.Errorf("Expected to find content for %+v", s)
+			}
 			r = append(r, nodes...)
 		}
 		return r, nil
@@ -74,6 +77,7 @@ func (f SelectorFeed) serializeLink(item rss.Item, msg *gomail.Message) error {
 	if err != nil {
 		return err
 	}
+
 	selection, err := f.Selector(doc, item)
 	if err != nil {
 		return err
