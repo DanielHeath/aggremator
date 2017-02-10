@@ -11,7 +11,7 @@ var (
 		FeedUrl:          "http://www.questionablecontent.net/QCRSS.xml",
 		FeedSample:       Sample,
 		MailCategory:     "Comics",
-		Selector:         feeds.CssSelector("#comic img"),
+		Selector:         feeds.CssSelector("img#strip"),
 		SupportTheArtist: "http://www.topatoco.com/merchant.mvc?Screen=CTGY&Store_Code=TO&Category_Code=QC",
 	}
 )
