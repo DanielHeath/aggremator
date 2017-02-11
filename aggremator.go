@@ -31,13 +31,13 @@ import (
 	"github.com/danielheath/aggremator/feeds/questionablecontent"
 	"github.com/danielheath/aggremator/feeds/sarahs_doodles"
 	"github.com/danielheath/aggremator/feeds/smbc"
-	"github.com/danielheath/aggremator/feeds/thedailywtf"
 	"github.com/danielheath/aggremator/feeds/webcomicname"
 	"github.com/danielheath/aggremator/feeds/whatif"
 	"github.com/danielheath/aggremator/feeds/xkcd"
 	"github.com/danielheath/aggremator/maildir"
 	"github.com/danielheath/aggremator/pastentries"
 	"github.com/go-gomail/gomail"
+	"github.com/hashicorp/go-multierror"
 )
 
 var pastEntriesPath string
@@ -73,7 +73,6 @@ var allFeeds = []feeds.Feed{
 	webcomicname.Feed,
 	fowllanguage.Feed,
 	flashboardwars.Feed,
-	thedailywtf.Feed,
 	smbc.Feed,
 	questionablecontent.Feed,
 	whatif.Feed,
