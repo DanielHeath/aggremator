@@ -9,7 +9,7 @@ var (
 		FeedUrl: "http://theagevsheraldsun.tumblr.com/rss",
 		// FeedSample:       Sample,
 		MailCategory:     "Comics",
-		Selector:         feeds.CssSelector(".photoset"),
+		Selector:         feeds.CssSelector("#stat-articles > article"),
 		SupportTheArtist: "",
 	}
 )
