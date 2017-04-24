@@ -104,6 +104,9 @@ func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) e
 
 		for _, srcNode := range hasSrcAttr.MatchAll(topLevelNodes) {
 			if src := getAttr(srcNode, "src"); src != "" {
+				if srcset := getAttr(srcNode, "srcset"); srcset != "" {
+					src = strings.Split(srcset, " ")[0]
+				}
 				src = rewriteSrc(src, baseUrl)
 				srcNode.Parent.InsertBefore(
 					&html.Node{
