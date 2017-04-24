@@ -11,6 +11,24 @@ TODO:
    * that way you can find out when the layout breaks your selector...
 */
 
+/*
+TODO:
+ * Uplift to the cloud
+ * gopherjs -> lambda?
+ * https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
+ *
+ * s3://aggremator/<site>/feedurl -> 10-day retention w/
+ *
+ * structure:
+ * -> feed GET (curl) - input=url, output=xml
+ * -> change detection (new entries) - inputs=xml+pastentries, outputs=[]url|[]message
+ * -> entry processing (fetch/transform) - inputs=url, output=message
+ * -> delivery (email) - inputs=message, output=smtp|offlineimapfile|other
+ *
+ * pastentries dataset size: 1kb/url, 30 urls/month * 10 feeds -> ~4mb/year. Will fit into ram on a tiny node, probably forever.
+ * Can prune every 10y to avoid having to manage it better.
+*/
+
 import (
 	"flag"
 	"fmt"
@@ -142,7 +160,7 @@ func main() {
 		}
 		for _, item := range doc.Items {
 
-			// TODO: One goroutine per feed
+			// TODO: One goroutine per feed? one process per feed?
 			// Have we seen this feed entry before?
 			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map; also, one-per-feed?
 			if _, ok := pastEntries[maildir.CleanId(item.Link+item.ID)]; !ok {
