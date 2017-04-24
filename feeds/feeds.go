@@ -27,6 +27,14 @@ func CssSelector(css string) SelectorFunc {
 	})
 }
 
+func RawItem(_ *goquery.Document, i rss.Item) ([]*html.Node, error) {
+	doc, err := goquery.NewDocumentFromReader(bytes.NewBuffer([]byte(i.Content)))
+	if err != nil {
+		return nil, err
+	}
+	return doc.Nodes, nil
+}
+
 func MultiSelectorFunc(sf ...SelectorFunc) SelectorFunc {
 	return SelectorFunc(func(doc *goquery.Document, item rss.Item) ([]*html.Node, error) {
 		r := []*html.Node{}
