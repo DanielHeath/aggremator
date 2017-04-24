@@ -84,7 +84,7 @@ func (f SelectorFeed) serializeLink(item rss.Item, msg *gomail.Message) error {
 	}
 
 	if len(selection) == 0 {
-		return fmt.Errorf("No content found by selector function.")
+		return fmt.Errorf("No content found by selector function (url %s)", item.Link)
 	}
 
 	nodes := append(selection, textToNode(f.SupportTheArtist))
