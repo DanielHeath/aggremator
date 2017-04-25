@@ -1,0 +1,60 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/PuerkitoBio/goquery",
+			"repository": "https://github.com/PuerkitoBio/goquery",
+			"revision": "ed7d758e9a34ba1f55e8084e0d731448b46921a8",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/SlyMarbo/rss",
+			"repository": "https://github.com/SlyMarbo/rss",
+			"revision": "71c68adad632fd4b6dc71b1b065db8c78123ea75",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/andybalholm/cascadia",
+			"repository": "https://github.com/andybalholm/cascadia",
+			"revision": "349dd0209470eabd9514242c688c403c0926d266",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/axgle/mahonia",
+			"repository": "https://github.com/axgle/mahonia",
+			"revision": "c528b747d92d41ca581a7acf3e604c396fc7c034",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/hashicorp/errwrap",
+			"repository": "https://github.com/hashicorp/errwrap",
+			"revision": "7554cd9344cec97297fa6649b055a8c98c2a1e55",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/hashicorp/go-multierror",
+			"repository": "https://github.com/hashicorp/go-multierror",
+			"revision": "ed905158d87462226a13fe39ddf685ea65f1c11f",
+			"branch": "master"
+		},
+		{
+			"importpath": "golang.org/x/net/html",
+			"repository": "https://go.googlesource.com/net",
+			"revision": "da118f7b8e5954f39d0d2130ab35d4bf0e3cb344",
+			"branch": "master",
+			"path": "/html"
+		},
+		{
+			"importpath": "gopkg.in/alexcesaro/quotedprintable.v2",
+			"repository": "https://gopkg.in/alexcesaro/quotedprintable.v2",
+			"revision": "9b4a113f96b3263b5223fe9c5fd1d1115811b343",
+			"branch": "v2"
+		},
+		{
+			"importpath": "gopkg.in/gomail.v1",
+			"repository": "https://gopkg.in/gomail.v1",
+			"revision": "11b919ab4933936a28fb6aeda5c6523091266f37",
+			"branch": "v1"
+		}
+	]
+}
