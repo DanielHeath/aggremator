@@ -134,6 +134,7 @@ func main() {
 				msg := gomail.NewMessage()
 				msg.SetHeader("From", "rss@nerdy.party")
 				msg.SetHeader("To", "rss@nerdy.party")
+				msg.SetHeader("Subject", "Error")
 				msg.SetBody("text/plain", err.Error()+"\n"+feed.Url()+"\n"+errType.PkgPath()+"\n"+errType.String())
 				send(
 					msg,
