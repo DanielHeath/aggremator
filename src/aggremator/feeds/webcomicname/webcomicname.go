@@ -9,7 +9,7 @@ var (
 		FeedUrl: "http://webcomicname.com/rss",
 		// FeedSample:       Sample,
 		MailCategory:     "Comics",
-		Selector:         feeds.CssSelector("#posts .post-content"),
+		Selector:         feeds.CssSelector("#posts article .post-content"),
 		SupportTheArtist: "",
 	}
 )
