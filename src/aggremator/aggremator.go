@@ -12,31 +12,14 @@ TODO:
 */
 
 /*
-TODO:
- * Uplift to the cloud
- * gopherjs -> lambda?
- * https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
- *
- * s3://aggremator/<site>/feedurl -> 10-day retention w/
- *
- * structure:
- * -> feed GET (curl) - input=url, output=xml
- * -> change detection (new entries) - inputs=xml+pastentries, outputs=[]url|[]message
- * -> entry processing (fetch/transform) - inputs=url, output=message
- * -> delivery (email) - inputs=message, output=smtp|offlineimapfile|other
- *
- * pastentries dataset size: 1kb/url, 30 urls/month * 10 feeds -> ~4mb/year. Will fit into ram on a tiny node, probably forever.
- * Can prune every 10y to avoid having to manage it better.
+TODO: Extract all these feeds to a config file or something
 */
-
-// I already know how to manage (a) server.
-// though it's nice to not have to reinstall everything when re-imaging, that's a ~45 minute saving in a theoretical future
-// vs several hours now.
-// put it on a spare email account (nerdy.party?) and add it to clients?
 
 import (
 	"flag"
 	"fmt"
+	"log"
+	"os"
 	"os/user"
 	"reflect"
 
@@ -69,7 +52,19 @@ var homedir string
 var debug bool
 var maildirPath string
 
+var mailer *gomail.Mailer
+
 func init() {
+	if os.Getenv("AGGREMATOR_PW") == "" {
+		panic("Must set AGGREMATOR_PW")
+	}
+
+	mailer = gomail.NewMailer(
+		"mail.gandi.net",
+		"rss@nerdy.party",
+		os.Getenv("AGGREMATOR_PW"),
+		465,
+	)
 	usr, err := user.Current()
 	die(err)
 	homedir = usr.HomeDir
@@ -137,8 +132,8 @@ func main() {
 
 				feedErrors = multierror.Append(feedErrors, err)
 				msg := gomail.NewMessage()
-				msg.SetHeader("From", "rss.errors@example.org")
-				msg.SetHeader("To", "rss.errors@example.org")
+				msg.SetHeader("From", "rss@nerdy.party")
+				msg.SetHeader("To", "rss@nerdy.party")
 				msg.SetBody("text/plain", err.Error()+"\n"+feed.Url()+"\n"+errType.PkgPath()+"\n"+errType.String())
 				send(
 					msg,
@@ -165,14 +160,13 @@ func main() {
 			continue
 		}
 		for _, item := range doc.Items {
-
 			// TODO: One goroutine per feed? one process per feed?
 			// Have we seen this feed entry before?
 			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map; also, one-per-feed?
 			if _, ok := pastEntries[maildir.CleanId(item.Link+item.ID)]; !ok {
 				msg := gomail.NewMessage()
-				msg.SetHeader("From", "rss@example.org")
-				msg.SetHeader("To", "rss@example.org")
+				msg.SetHeader("From", "rss@nerdy.party")
+				msg.SetHeader("To", "rss@nerdy.party")
 				err := feed.Serialize(*item, msg)
 				// die(err, item, "\n", item.Content)
 				if fail(err) {
@@ -205,15 +199,9 @@ func main() {
 }
 
 func send(msg *gomail.Message, sendPath string) {
-	// TODO: SMTP directly (CLI options for sender/recipient/credentials?)
-	if debug {
-		die(gomail.NewCustomMailer("127.0.0.1:1025", nil).Send(msg))
-	} else {
-		sender := maildir.Mailer(sendPath)
-
-		m := gomail.NewMailer("localhost", "dummy", "dummy", 9002, gomail.SetSendMail(sender))
-		die(m.Send(msg))
-	}
+	log.Printf("Sending %+v\n", msg)
+	die(mailer.Send(msg))
+	log.Printf("Sent\n")
 }
 
 func die(err error, context ...interface{}) {
