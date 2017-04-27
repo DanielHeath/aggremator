@@ -218,9 +218,11 @@ func AttachHtmlBody(msg *gomail.Message, baseUrl url.URL, nodes ...*html.Node) e
 					return err
 				}
 
-				setAttr(srcNode, "orig-src", src)
-				setAttr(srcNode, "src", "cid:"+img.Name)
+				// setAttr(srcNode, "orig-src", src)
+				srcNode.Attr = []html.Attribute{html.Attribute{Key: "src", Val: "cid:" + img.Name}}
 				setAttr(srcNode, "apple-inline", "yes")
+				setAttr(srcNode, "class", "")
+				setAttr(srcNode, "id", img.Name)
 				msg.Attach(img)
 			}
 		}
