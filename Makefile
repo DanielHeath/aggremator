@@ -3,21 +3,18 @@
 export GOPATH := $(CURDIR):$(CURDIR)/vendor
 export PATH := $(CURDIR)/bin:$(PATH)
 
-.PHONY: devel ./bin/server
+.PHONY: bin/aggremator bin/aggremator.linux
 
-default: devel
+default: bin/aggremator
 
-test: $(wildcard src/**/*.go) $(wildcard vendor/src/**/*.go) ./bin/gb
-	gb test
+deploy: bin/aggremator.linux
+	scp bin/aggremator.linux camlistore:aggremator
 
-bin/gb-vendor:
-	go build -o bin/gb-vendor github.com/constabulary/gb/cmd/gb-vendor
+bin/aggremator.linux:
+	GOOS=linux go build -o bin/aggremator.linux aggremator
 
-bin/gb: bin/gb-vendor
-	go build -o bin/gb github.com/constabulary/gb/cmd/gb
-
-bin/% : $(wildcard src/**/*.go) $(wildcard vendor/src/**/*.go) ./bin/gb
-	gb build $( basename $@ )
+bin/aggremator:
+	GOOS=darwin go build -o bin/aggremator aggremator
 
 doc:
 	godoc -http :6060
