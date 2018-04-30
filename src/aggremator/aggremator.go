@@ -30,6 +30,7 @@ import (
 	"aggremator/feeds/dilbert"
 	"aggremator/feeds/flashboardwars"
 	"aggremator/feeds/fowllanguage"
+	"aggremator/feeds/goodbear"
 	"aggremator/feeds/orderofthestick"
 	"aggremator/feeds/pbfcomics"
 	"aggremator/feeds/pennyarcade"
@@ -91,6 +92,7 @@ var allFeeds = []feeds.Feed{
 	sarahs_doodles.Feed,
 	webcomicname.Feed,
 	fowllanguage.Feed,
+	goodbear.Feed,
 	flashboardwars.Feed,
 	smbc.Feed,
 	questionablecontent.Feed,
