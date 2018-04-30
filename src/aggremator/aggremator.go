@@ -164,12 +164,12 @@ func main() {
 			// TODO: One goroutine per feed? one process per feed?
 			// Have we seen this feed entry before?
 			// TODO: pastEntries should be a smarter type, incorporating CleanId, not just a map; also, one-per-feed?
-			if _, ok := pastEntries[maildir.CleanId(item.Link+item.ID)]; !ok {
+			if _, alreadyFound := pastEntries[maildir.CleanId(item.Link+item.ID)]; item.Link != "" && !alreadyFound {
 				msg := gomail.NewMessage()
 				msg.SetHeader("From", "rss@nerdy.party")
 				msg.SetHeader("To", "rss@nerdy.party")
 				err := feed.Serialize(*item, msg)
-				// die(err, item, "\n", item.Content)
+
 				if fail(err) {
 					continue
 				}
