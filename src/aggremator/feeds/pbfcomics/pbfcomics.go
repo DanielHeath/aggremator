@@ -9,7 +9,7 @@ var (
 		FeedUrl:          `http://www.pbfcomics.com/feed/feed.xml`,
 		FeedSample:       Sample,
 		MailCategory:     "Comics",
-		Selector:         feeds.CssSelector("#toptd"),
+		Selector:         feeds.CssSelector("#comic"),
 		SupportTheArtist: "http://www.pbfcomics.com/things/prints/",
 	}
 )
